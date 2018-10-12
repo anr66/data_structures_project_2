@@ -9,6 +9,8 @@
 #include <list>
 #include <string>
 #include <iterator>
+#include "Employee.h"
+#include "empmaps.h"
 
 // using statements
 using std::cout;
@@ -24,30 +26,8 @@ using std::istringstream;
 
 int main()
 {
-    ifstream input_file;
-    string file_name;
+    vector<Employee> emps = employees();
 
-    cout << "Please enter a file name to process\n";
-    cin >> file_name;
-
-    input_file.open(file_name.c_str());
-
-    if (input_file.fail())
-    {
-        cout << "Error opening file, try again" << "\n";
-        return 0;
-    }
-
-    string line;
-
-    while(getline(input_file, line))
-    {
-        istringstream iss(line);
-
-        string sub;
-        iss >> sub;
-        cout << "Substrings: " << sub << "\n";
-    }
 
     return 0;
 }
