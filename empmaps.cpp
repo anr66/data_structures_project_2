@@ -49,6 +49,8 @@ vector<Employee> employees()
         employee_vec.push_back(emp);
     }
 
+    cout << "Number of employees: " << employee_vec.size() << "\n";
+
 }
 
 
@@ -73,39 +75,90 @@ map<int,vector<Employee>> mapSalRange(vector<Employee> & emp)
 
     for(int i = 0; i <= emp.size(); i++)
     {
-        int sal_range = (emp[i].salary() / 10000) * 10000;
+        int sal_range = (emp[i].sal() / 10000) * 10000;
         sal[sal_range].push_back(emp[i]);
 
     }
-
 }
 
 
 void printSalRange(map<int,vector<Employee>> & salRange)
 {
-    map<int, vector<Employee>::iterator it;
+    int largest_size = 0;
+    int largest_group = 0;
+
+    map<int, vector<Employee>>::iterator it;
     for (it = salRange.begin(); it != salRange.end(); ++it)
     {
-        cout << *it << "\n";
+        int emps = it->second.size();
+        int groups = it->first;
+
+        cout << "ORDERED Map Salary Range " << groups << " contains " << emps << "\n";
+
+        // Check to see if we found a range with more employees
+        if (emps > largest_size)
+        {
+            largest_group = groups;
+            largest_size = emps;
+        }
     }
+
+    cout << "ORDERED Map Salary Range with most employees: " << largest_group << 
+    " containing " << largest_size << " employees\n";
 
 }
 
 
 unordered_map<int,vector<Employee>> umapEmpDept(vector<Employee> & emp)
 {
+    unordered_map<int, vector<Employee>> dept;
+
+    for(int i = 0; i <= emp.size(); i++)
+    {
+        int dept_num = emp[i].id() / 100;
+        dept[dept_num].push_back(emp[i]);
+    }
 
 }
 
 
 unordered_map<int,vector<Employee>> umapSalRange(vector<Employee> & emp)
 {
+    unordered_map<int, vector<Employee>> sal;
 
+    for(int i = 0; i <= emp.size(); i++)
+    {
+        int sal_range = (emp[i].sal() / 10000) * 10000;
+        sal[sal_range].push_back(emp[i]);
+
+    }
 }
 
 
 void uprintSalRange(unordered_map<int,vector<Employee>> & salRange)
 {
+    int largest_size = 0;
+    int largest_group = 0;
+
+    unordered_map<int, vector<Employee>>::iterator it;
+    for (it = salRange.begin(); it != salRange.end(); ++it)
+    {
+        int emps = it->second.size();
+        int groups = it->first;
+
+        cout << "UNORDERED Map Salary Range " << groups << " contains " << emps << "\n";
+
+        // Check to see if we found a range with more employees
+        if (emps > largest_size)
+        {
+            largest_group = groups;
+            largest_size = emps;
+        }
+    }
+
+    cout << "UNORDERED Map Salary Range with most employees: " << largest_group << 
+    " containing " << largest_size << " employees\n";
+
 
 }
 
@@ -131,21 +184,11 @@ vector<string> get_input_data()
 
     while(getline(input_file, line))
     {
-        lines.push_back(line);
-
-        //istringstream iss(line);
-
-        //string id;
-        //iss >> id;
-
-        //string name;
-        //iss >> name;
-
-        //string salary;
-        //iss >> salary;
-
-        //cout << "id: " << id << "name: " << name << "salary: " << salary << "\n";
+        if (line.length() > 0)
+        {
+            lines.push_back(line);
+        }
     }
-
+    
     return lines;
 }
